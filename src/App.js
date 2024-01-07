@@ -52,13 +52,15 @@ const returnClarifaiJSONRequest = (imageUrl) => {
 function App() {
 
   const [url,setUrl] = useState('')
+  const [searchBox,setSearchBox] = useState('')
 
   const onInputChange = (event) => {
-    setUrl(event.target.value);
+    setSearchBox(event.target.value);
   }
 
 
   const onButtonSubmit = () => {
+    setUrl(searchBox);
     console.log('Click');
     fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiJSONRequest(url))
     .then(response => response.json())
