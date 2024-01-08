@@ -16,7 +16,6 @@ const returnClarifaiJSONRequest = (imageUrl) => {
     const USER_ID = 'jcnovak5';       
     const APP_ID = 'face-recognition-brain';
     // Change these to whatever model and image URL you want to use
-    const MODEL_ID = 'face-detection';
     const IMAGE_URL = imageUrl;
     
     const raw = JSON.stringify({
@@ -52,6 +51,7 @@ function App() {
 
   const [url,setUrl] = useState('')
   const [searchBox,setSearchBox] = useState('')
+  const MODEL_ID = 'face-detection';
 
   const onInputChange = (event) => {
     setUrl(event.target.value);
@@ -61,7 +61,7 @@ function App() {
   const onButtonSubmit = () => {
     console.log('Click');
     setSearchBox(url);
-    fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiJSONRequest(url))
+    fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/outputs", returnClarifaiJSONRequest(url))
     .then(response => response.json())
     .then(response => {console.log(response.outputs[0].data.regions[0].region_info.bounding_box)});
   }
