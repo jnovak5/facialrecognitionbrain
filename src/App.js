@@ -4,7 +4,6 @@ import Logo from './components/Logo/Logo';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import Rank from './components/Rank/Rank';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
-import tachyons from 'tachyons';
 import ParticlesBg from 'particles-bg'
 import React, { useState } from 'react';
 
@@ -55,18 +54,16 @@ function App() {
   const [searchBox,setSearchBox] = useState('')
 
   const onInputChange = (event) => {
-    setSearchBox(event.target.value);
+    setUrl(event.target.value);
   }
 
 
   const onButtonSubmit = () => {
-    setUrl(searchBox);
     console.log('Click');
+    setSearchBox(url);
     fetch("https://api.clarifai.com/v2/models/" + 'face-detection' + "/outputs", returnClarifaiJSONRequest(url))
     .then(response => response.json())
-    .then(response => {
-      console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-    })
+    .then(response => {console.log(response.outputs[0].data.regions[0].region_info.bounding_box)});
   }
 
   return (
@@ -76,7 +73,7 @@ function App() {
       <Logo />
       <Rank />
       <ImageLinkForm onInputChange={onInputChange} onButtonSubmit={onButtonSubmit} />
-      <FaceRecognition imageUrl={url} />
+      <FaceRecognition imageUrl={searchBox} />
     </div>
   );
 }
